@@ -17,6 +17,12 @@ class UserClientController(
     fun getUserProtobuf(): UserDetailsDto? =
         userApiClientService.getUserAsProtobuf()?.toDto()
 
+    @GetMapping("/protobuf-list")
+    fun getUserProtobufList(): List<UserDetailsDto>? =
+        userApiClientService.getUserAsProtobufList()?.userDetailsList?.map {
+            it.toDto()
+        }
+
     @GetMapping("/json")
     fun getUserJson(): UserDetailsDto?{
         val data = userApiClientService.getUserAsJsonNode()

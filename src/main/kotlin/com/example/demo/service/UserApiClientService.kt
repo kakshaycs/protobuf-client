@@ -30,6 +30,18 @@ class UserApiClientService(
         return response.body
     }
 
+    fun getUserAsProtobufList(): UserDetailsProto.UserDetailsList? {
+        val url = "$serverBaseUrl/users/protobuf"
+        val headers = HttpHeaders().apply {
+            accept = listOf(MediaType.parseMediaType("application/x-protobuf"))
+        }
+        val entity = HttpEntity<Void>(headers)
+        val response: ResponseEntity<UserDetailsProto.UserDetailsList> = restTemplate.exchange(
+            url, HttpMethod.GET, entity, UserDetailsProto.UserDetailsList::class.java
+        )
+        return response.body
+    }
+
     fun getUserAsJsonNode(): JsonNode? {
         val url = "$serverBaseUrl/user/json"
         val headers = HttpHeaders().apply {
